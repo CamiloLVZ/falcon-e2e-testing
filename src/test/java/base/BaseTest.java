@@ -10,8 +10,8 @@ public abstract class BaseTest {
 
     static Playwright playwright;
     static Browser browser;
-    BrowserContext context;
-    Page page;
+    protected BrowserContext context;
+    protected Page page;
 
     @BeforeAll
     static void launchBrowser() {

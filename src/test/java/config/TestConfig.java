@@ -28,4 +28,12 @@ public class TestConfig {
         }
         return "http://localhost:8080";
     }
+
+    public static boolean isProdActive(){
+        return environment.equals("prod");
+    }
+
+    public static boolean isLocalActive(){
+        return environment.equals("local");
+    }
 }
