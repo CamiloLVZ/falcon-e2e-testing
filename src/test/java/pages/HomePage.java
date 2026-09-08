@@ -33,4 +33,8 @@ public class HomePage{
         page.getByTestId("airport-option-"+airportCode).click();
     }
 
+    public Locator getSearchButton(){
+        return searchButton;
+    }
+
 }

@@ -1,6 +1,7 @@
 package base;
 
 import com.microsoft.playwright.*;
+import config.TestConfig;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -26,11 +27,13 @@ public abstract class BaseTest {
     }
 
     @BeforeEach
-    void createContextAndPage() {
+    void createContextPageAndNavigate() {
         context = browser.newContext();
         page = context.newPage();
+        page.navigate(TestConfig.baseUrl());
     }
-    @AfterEach
+
+        @AfterEach
     void closeContext() {
         context.close();
     }

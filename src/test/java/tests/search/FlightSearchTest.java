@@ -2,8 +2,6 @@ package tests.search;
 
 import base.BaseTest;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
-import config.TestConfig;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.FlightResultsPage;
@@ -15,11 +13,6 @@ import java.time.format.DateTimeFormatter;
 @Tag("prod-safe")
 @Tag("regression")
 public class FlightSearchTest extends BaseTest {
-
-    @BeforeEach
-    public void navigate(){
-        page.navigate(TestConfig.baseUrl());
-    }
 
     @Test
     public void searchFlights() {

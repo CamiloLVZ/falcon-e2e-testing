@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
     void serverWakeUpShowsAndHides() {
         Assumptions.assumeTrue(TestConfig.isProdActive());
 
-        page.navigate(TestConfig.baseUrl());
         Locator wakeUpImage = page.getByTestId("wake-up-image");
         try {
             wakeUpImage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
