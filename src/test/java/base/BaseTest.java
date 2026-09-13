@@ -1,11 +1,10 @@
 package base;
 
 import com.microsoft.playwright.*;
+import com.microsoft.playwright.assertions.LocatorAssertions;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import config.TestConfig;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 
 public abstract class BaseTest {
 
@@ -31,9 +30,21 @@ public abstract class BaseTest {
         context = browser.newContext();
         page = context.newPage();
         page.navigate(TestConfig.baseUrl());
+
+        if (!TestConfig.isLocalActive()) {
+            Locator wakeUpImage = page.getByTestId("wake-up-image");
+
+            try {
+                wakeUpImage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+            } catch (TimeoutError e) {
+                return;
+            }
+            PlaywrightAssertions.assertThat(wakeUpImage)
+                    .isHidden(new LocatorAssertions.IsHiddenOptions().setTimeout(300000));
+        }
     }
 
-        @AfterEach
+    @AfterEach
     void closeContext() {
         context.close();
     }
