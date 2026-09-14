@@ -14,7 +14,7 @@ public class NavBarTest extends BaseTest {
 
     @Test
     public void navigateToBooking(){
-        page.navigate(TestConfig.baseUrl()+"/manage");
+        navigateSafely(TestConfig.baseUrl() + "/manage");
         Locator bookNavButton = page.getByTestId("navlink-reservar");
         bookNavButton.click();
         HomePage homePage = new HomePage(page);
