@@ -39,7 +39,6 @@ public class FlightSearchTest extends BaseTest {
         PlaywrightAssertions.assertThat(results.getError()).isVisible();
     }
 
-    @Tag("debug")
     @Test
     public void bookButton(){
         LocalDate date = LocalDate.now().plusDays(5);
