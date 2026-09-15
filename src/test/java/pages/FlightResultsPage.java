@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import pages.booking.BookingPage;
 
 public class FlightResultsPage {
         private final Page page;
@@ -24,7 +25,8 @@ public class FlightResultsPage {
             return error;
         }
 
-        public Locator getBookFlightButtons() {
-            return bookFlightButtons;
+        public BookingPage clickBookFlight(int index) {
+            bookFlightButtons.nth(index).click();
+            return new BookingPage(page);
         }
 }
