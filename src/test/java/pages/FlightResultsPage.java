@@ -14,7 +14,7 @@ public class FlightResultsPage {
             this.page = page;
             this.flightCards = page.getByTestId("flight-card");
             this.error = page.getByTestId("error-screen");
-            this.bookFlightButtons = page.getByTestId("book-flight-button");
+            this.bookFlightButtons = page.getByTestId("flight-card-book-button");
         }
 
         public Locator getFlightCards() {

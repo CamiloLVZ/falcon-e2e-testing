@@ -10,7 +10,7 @@ public class ManagePage {
 
     public ManagePage(Page page) {
         this.page = page;
-        searchButton = page.getByTestId("search-reservation-button");
+        searchButton = page.getByTestId("manage-search-button");
         title = page.getByTestId("manage-title");
     }
 
