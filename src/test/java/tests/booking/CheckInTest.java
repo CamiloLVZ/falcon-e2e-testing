@@ -11,7 +11,6 @@ import pages.CheckInPage;
 
 import java.time.LocalDate;
 
-@Tag("debug")
 @Tag("regression")
 public class CheckInTest extends BaseTest {
 

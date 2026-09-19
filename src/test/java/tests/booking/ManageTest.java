@@ -11,7 +11,6 @@ import pages.ManagePage;
 
 import java.time.LocalDate;
 
-@Tag("debug")
 @Tag("regression")
 public class ManageTest extends BaseTest {
 
