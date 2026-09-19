@@ -14,8 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class BaseTest {
 
-    static Playwright playwright;
-    static Browser browser;
+    protected static Playwright playwright;
+    protected static Browser browser;
     protected BrowserContext context;
     protected Page page;
 
