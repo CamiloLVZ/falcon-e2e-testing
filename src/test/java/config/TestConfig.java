@@ -22,11 +22,11 @@ public class TestConfig {
         return "http://localhost:5173";
     }
 
-    public static String apiUrl(){
+    public static String apiBaseUrl(){
         if (environment.equals("prod")) {
-            return "https://api.falconbooking.org";
+            return "https://api.falconbooking.org/api";
         }
-        return "http://localhost:8080";
+        return "http://localhost:8080/api";
     }
 
     public static boolean isProdActive(){
