@@ -122,6 +122,18 @@ FROM public.route r
 WHERE r.status = 'ACTIVE'
   AND rd.day_of_week = TRIM(TO_CHAR(CURRENT_DATE + gs.day_offset, 'FMDAY'));
 
+-- 4. Flights in check-in range
+INSERT INTO public.flight (id_route, departure_datetime, id_airplane_type, status, base_price_economy, base_price_first_class)
+SELECT
+    r.id,
+    (CURRENT_TIMESTAMP + interval '6 hours'),
+    r.id_default_airplane_type,
+    'CHECK_IN_AVAILABLE',
+    r.base_price_economy,
+    r.base_price_first_class
+FROM public.route r
+WHERE r.status = 'ACTIVE';
+
 COMMIT;
 
 -- ----------------------------------------------------------------------------
