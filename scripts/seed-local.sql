@@ -134,6 +134,33 @@ SELECT
 FROM public.route r
 WHERE r.status = 'ACTIVE';
 
+-- ============================================================================
+-- CONCURRENCY TEST SETUP
+-- ============================================================================
+
+-- Special airplane type: only 1 first class seat
+INSERT INTO public.airplane_type (producer, model, economy_seats, first_class_seats, status, seat_columns)
+VALUES ('TEST', 'CONC-1F', 120, 1, 'ACTIVE', 'A');
+
+-- Route VVC -> CTG
+INSERT INTO public.route (id_airport_origin, id_airport_destination, flight_number,
+                          id_default_airplane_type, duration_minutes, status,
+                          base_price_economy, base_price_first_class)
+SELECT o.id, d.id, 'CONC01',
+       (SELECT id FROM public.airplane_type WHERE producer = 'TEST' AND model = 'CONC-1F'),
+       90, 'ACTIVE', 150000, 400000
+FROM public.airport o, public.airport d
+WHERE o.iata_code = 'VVC' AND d.iata_code = 'CTG';
+
+-- Unique flight: 10 days from today
+INSERT INTO public.flight (id_route, departure_datetime, id_airplane_type, status,
+                           base_price_economy, base_price_first_class)
+SELECT r.id,
+       (CURRENT_DATE + interval '10 days' + interval '12 hours') AT TIME ZONE 'UTC',
+       (SELECT id FROM public.airplane_type WHERE producer = 'TEST' AND model = 'CONC-1F'),
+       'SCHEDULED', 150000, 400000
+FROM public.route r
+WHERE r.flight_number = 'CONC01';
 COMMIT;
 
 -- ----------------------------------------------------------------------------
