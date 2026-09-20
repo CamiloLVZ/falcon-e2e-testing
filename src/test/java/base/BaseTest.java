@@ -1,8 +1,11 @@
 package base;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
+import com.microsoft.playwright.options.RequestOptions;
 import config.TestConfig;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -68,6 +71,30 @@ public abstract class BaseTest {
         this.navigateSafely(TestConfig.baseUrl() + "/login");
         LoginPage loginPage = new LoginPage(page);
         loginPage.login(email, password);
+    }
+
+    protected String getClientJWT() {
+        APIRequestContext request = playwright.request().newContext();
+        String loginJson = "{\"email\":\"e2e.client@falcon.test\",\"password\":\"Test1234!\"}";
+
+        APIResponse response = request.post(
+                TestConfig.apiBaseUrl() + "/v1/auth/login",
+                RequestOptions.create()
+                        .setHeader("Content-Type", "application/json")
+                        .setData(loginJson)
+        );
+
+        PlaywrightAssertions.assertThat(response).isOK();
+
+        String token;
+        try {
+            JsonNode responseBody = new ObjectMapper().readTree(response.text());
+            token = responseBody.get("accessToken").asText();
+        } catch (Exception e) {
+            throw new RuntimeException("Error parsing login response token", e);
+        }
+        return token;
+
     }
 
     protected String generateRandomIdentification() {

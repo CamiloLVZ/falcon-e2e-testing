@@ -1,8 +1,6 @@
 package tests.api;
 
 import base.BaseTest;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
@@ -12,34 +10,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-
 @Tag("api")
 @Tag("regression")
 public class AuthApiTest extends BaseTest {
-
-    private String loginClient() {
-        APIRequestContext request = playwright.request().newContext();
-        String loginJson = "{\"email\":\"e2e.client@falcon.test\",\"password\":\"Test1234!\"}";
-
-        APIResponse response = request.post(
-                TestConfig.apiBaseUrl() + "/v1/auth/login",
-                RequestOptions.create()
-                        .setHeader("Content-Type", "application/json")
-                        .setData(loginJson)
-        );
-
-        PlaywrightAssertions.assertThat(response).isOK();
-
-        String token;
-        try {
-            JsonNode responseBody = new ObjectMapper().readTree(response.text());
-            token = responseBody.get("accessToken").asText();
-        } catch (Exception e) {
-            throw new RuntimeException("Error parsing login response token", e);
-        }
-        return token;
-
-    }
 
     @Test
     public void getMyPassengerUnauthenticated() {
@@ -70,7 +43,7 @@ public class AuthApiTest extends BaseTest {
 
     @Test
     public void authenticatedClientTriesToPostFlight(){
-        String token = loginClient();
+        String token = getClientJWT();
         APIRequestContext request = playwright.request().newContext();
 
         APIResponse response = request.post(TestConfig.apiBaseUrl() + "/v1/flights",
@@ -96,7 +69,7 @@ public class AuthApiTest extends BaseTest {
 
     @Test
     public void authenticatedClientTriesToPostRoute(){
-        String token = loginClient();
+        String token = getClientJWT();
         APIRequestContext request = playwright.request().newContext();
 
         APIResponse response = request.post(TestConfig.apiBaseUrl() + "/v1/routes",
