@@ -90,8 +90,6 @@ public class AuthApiTest extends BaseTest {
         APIResponse response = request.get(TestConfig.apiBaseUrl() + "/v1/routes?size=10&page=0",
                 RequestOptions.create().setHeader("Content-Type", "application/json"));
 
-        System.out.println(response.text());
-
         PlaywrightAssertions.assertThat(response).isOK();
         Assertions.assertNotNull(response.text());
     }
