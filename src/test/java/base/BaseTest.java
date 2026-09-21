@@ -6,6 +6,7 @@ import com.microsoft.playwright.*;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.RequestOptions;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import config.TestConfig;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -46,23 +47,21 @@ public abstract class BaseTest {
         this.navigateSafely(TestConfig.baseUrl());
     }
 
-    @AfterEach
-    void closeContext() {
-        context.close();
-    }
-
     protected void navigateSafely(String url) {
         page.navigate(url);
 
         if (!TestConfig.isLocalActive()) {
-            Locator wakeUpImage = page.getByTestId("wake-up-image");
+            Locator wakeUpOverlay = page.getByTestId("server-wakeup-overlay");
 
             try {
-                wakeUpImage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+                wakeUpOverlay.waitFor(new Locator.WaitForOptions()
+                        .setState(WaitForSelectorState.VISIBLE)
+                        .setTimeout(5000));
             } catch (TimeoutError e) {
                 return;
             }
-            PlaywrightAssertions.assertThat(wakeUpImage)
+
+            PlaywrightAssertions.assertThat(wakeUpOverlay)
                     .isHidden(new LocatorAssertions.IsHiddenOptions().setTimeout(300000));
         }
     }
