@@ -6,22 +6,22 @@ End-to-end testing suite for [Falcon Booking](https://falconbooking.org), an air
 
 ---
 
-## Coverage — 37 tests across 12 test classes
+## Coverage — 38 tests across 12 test classes
 
 | Area | Class | Tests | Environment |
-|---|---|---|---|
-| Smoke | `SmokeTest` | 1 | Local + Prod |
-| Smoke | `ServerWakeUpSmokeTest` | 1 | Prod only |
-| Navigation | `NavBarTest` | 5 | Local + Prod |
-| Flight search | `FlightSearchTest` | 2 | Local + Prod |
-| Booking flow | `BookingTest` | 8 | Local only |
-| Manage reservation | `ManageTest` | 2 | Local only |
-| Check-in | `CheckInTest` | 2 | Local only |
-| Authentication | `LoginTest` | 3 | Local + Prod |
-| Protected URLs | `ProtectedURLsTest` | 3 | Local + Prod |
-| API authorization | `AuthApiTest` | 5 | Local only |
-| Admin panel | `AdminDashboardTest` | 4 | Local only |
-| Concurrency | `BookingConcurrencyTest` | 1 | Local only |
+|---|---|-------|---|
+| Smoke | `SmokeTest` | 1     | Local + Prod |
+| Smoke | `ServerWakeUpSmokeTest` | 1     | Prod only |
+| Navigation | `NavBarTest` | 5     | Local + Prod |
+| Flight search | `FlightSearchTest` | 2     | Local + Prod |
+| Booking flow | `BookingTest` | 8     | Local only |
+| Manage reservation | `ManageTest` | 2     | Local only |
+| Check-in | `CheckInTest` | 2     | Local only |
+| Authentication | `LoginTest` | 4     | Local + Prod |
+| Protected URLs | `ProtectedURLsTest` | 3     | Local + Prod |
+| API authorization | `AuthApiTest` | 5     | Local only |
+| Admin panel | `AdminDashboardTest` | 4     | Local only |
+| Concurrency | `BookingConcurrencyTest` | 1     | Local only |
 
 📋 **[Traceability Matrix](https://docs.google.com/spreadsheets/d/1xxQBuRYA_vUW2toXpodI68_XBMNllf5Pxot8aH-5cPA/edit?usp=sharing)** — full test catalog with priority, environment, automation status and current state for each case.
 

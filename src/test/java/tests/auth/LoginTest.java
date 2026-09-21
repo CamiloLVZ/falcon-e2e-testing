@@ -2,6 +2,7 @@ package tests.auth;
 
 import base.BaseTest;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
+import config.TestConfig;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.AdminDashboardPage;
@@ -33,5 +34,22 @@ public class LoginTest extends BaseTest {
         loginAs("not-valid@email.com", "incorrect-password");
         LoginPage loginPage = new LoginPage(page);
         PlaywrightAssertions.assertThat(loginPage.getErrorLabel()).isVisible();
+    }
+
+    @Test
+    public void registerNewUser() {
+        String randomEmail = "user." + System.currentTimeMillis() + "@falcon.test";
+        String password = "f4lc0nb00k1ng";
+
+        navigateSafely(TestConfig.baseUrl() + "/login");
+        LoginPage loginPage = new LoginPage(page);
+        loginPage.register(randomEmail, password);
+
+        PlaywrightAssertions.assertThat(loginPage.getRegisterErrorLabel()).isHidden();
+
+        ProfilePage profilePage = new ProfilePage(page);
+        PlaywrightAssertions.assertThat(profilePage.getUserBanner()).isVisible();
+        PlaywrightAssertions.assertThat(profilePage.getUserName()).isVisible();
+        PlaywrightAssertions.assertThat(profilePage.getUserEmail()).containsText(randomEmail);
     }
 }
